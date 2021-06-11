@@ -14,7 +14,7 @@ while True:
     # Validate name
     stop = True
     for name in names:
-        if not name.isalpha():
+        if not name.isalpha() or len(name) == 1:
             stop = False
             break
 
