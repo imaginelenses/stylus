@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Calculator</title>
+        <link href="styles.css" rel="stylesheet">
+        <link rel="icon" href="favicon.ico">
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                let display = document.querySelector('#display');
+
+                // Calculate result
+                let calculate = () => {
+                    if (display.innerHTML) {
+                        let equation = display.innerHTML.trim().split(' ');
+                        let result = equation[0];
+
+                        for (let i = 1; i < equation.length; i = i + 2) {
+                            let operand = parseFloat(equation[i + 1]);
+                            if (isNaN(operand)) {
+                                alert('Enter a valid equation');
+                                return
+                            }
+
+                            if (equation[i] === '+') {
+                                result = parseFloat(result) + parseFloat(operand);
+                            }
+                            else if (equation[i] === '-') {
+                                result = result - operand;
+                            }
+                            else if (equation[i] === '*') {
+                                result = result * operand
+                            }
+                            else if (equation[i] === '/') {
+                                result = result / operand
+                            }
+                        }
+
+                        if (isNaN(result)) {
+                            alert('Enter a valid equation');
+                            return
+                        }
+
+                        display.innerHTML = result;
+                    }
+                };
+
+                // Display numbers pressed
+                document.querySelectorAll('.key').forEach((key) => {
+                    key.addEventListener('click', () => {
+                        let element = display.innerHTML.trim().split(' ')
+                        element = element[element.length - 1]
+                        if (key.textContent === '.') {
+                            if (element.includes('.')) {
+                                return
+                            }
+                            else if (isNaN(element) || element === '') {
+                                display.innerHTML = display.innerHTML + '0';
+                            }
+                        }
+                        display.innerHTML = display.innerHTML + key.textContent;
+                    });
+                });
+
+                // Display operations pressed
+                document.querySelectorAll('.operation').forEach((operation) => {
+                    operation.addEventListener('click', () => {
+                        let val = display.innerHTML.trim().split(' ')
+
+                        if (!isNaN(val[val.length - 1])) {
+                            if (val[val.length - 1] === '') {
+                                display.innerHTML = 0;
+                            }
+                            display.innerHTML = display.innerHTML + ' ' + operation.textContent + ' ';
+                        }
+                    });
+                });
+
+                // Check equal to is pressed
+                document.querySelector('.equal').addEventListener('click', calculate);
+
+
+                // Handling keyboard Inputs "Key Binding"
+                document.addEventListener('keyup', (event) => {
+                    let key = String.fromCharCode(event.keyCode);
+                    if (!isNaN(key) && key !== ' ' && key !== '\r' && !event.shiftKey && !event.altKey && !event.ctrlKey) {
+                        display.innerHTML = display.innerHTML + key;
+                    }
+                    else if (event.shiftKey && !event.altKey && !event.ctrlKey) {
+                        let operand = ''
+                        if (event.keyCode === 187) { operand = '+' }
+                        else if (event.keyCode === 189) { operand = '-' }
+                        else if (event.keyCode === 56) { operand = '*' }
+                        else if (event.keyCode === 191) { operand = '/' }
+
+                        if (operand.length > 0) {
+                            let val = display.innerHTML.trim().split(' ')
+
+                            if (!isNaN(val[val.length - 1])) {
+                                if (val[val.length - 1] === '') {
+                                    display.innerHTML = 0;
+                                }
+                                display.innerHTML = display.innerHTML + ' ' + operand + ' ';
+                            }
+                        }
+                    }
+                    else if (!event.shiftKey && !event.altKey && !event.ctrlKey) {
+                        // Check if equal to or enter is pressed
+                        if (event.keyCode === 187 || event.keyCode === 13) { calculate() }
+                        // Check if backspace is pressed
+                        else if (event.keyCode === 8) {
+                            let val = display.innerHTML;
+                            display.innerHTML = val.replace(val[val.length - 1], '');
+                        }
+                        // Check if . is pressed
+                        else if (event.keyCode === 190) {
+                            let element = display.innerHTML.trim().split(' ')
+                            element = element[element.length - 1]
+                            if (element.includes('.')) {
+                                return
+                            }
+                            else if (isNaN(element) || element === '') {
+                                display.innerHTML = display.innerHTML + '0';
+                            }
+                            display.innerHTML = display.innerHTML + '.';
+                        }
+                    }
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <div class="calculator">
+            <p id="display"></p>
+            <div class="keypad">
+                <button class="key">1</button>
+                <button class="key">2</button>
+                <button class="key">3</button>
+                <button class="operation">/</button>
+
+                <button class="key">4</button>
+                <button class="key">5</button>
+                <button class="key">6</button>
+                <button class="operation">*</button>
+
+                <button class="key">7</button>
+                <button class="key">8</button>
+                <button class="key">9</button>
+                <button class="operation">-</button>
+
+                <button class="key">.</button>
+                <button class="key">0</button>
+                <button class="equal">=</button>
+                <button class="operation">+</button>
+            </div>
+        </div>
+    </body>
+</html>
