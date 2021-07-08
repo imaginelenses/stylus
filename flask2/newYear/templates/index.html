@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Is it New Year?</title>
+        <style>
+            body {
+                display: flex;
+                height: 90vh;
+                align-items: center;
+                justify-content: center;
+                background-color: black;
+            }
+
+            h1 {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 80px;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            <!-- Conditional templating -->
+            {% if isNewYear %}
+                YES
+            {% else %}
+                NO
+            {% endif %}
+        </h1>
+    </body>
+</html>

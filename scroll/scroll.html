@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Scroll</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                let callFunction = true
+
+                document.querySelector('.scroll').addEventListener('scroll', () => {
+                    if (callFunction) {
+                        callFunction = false
+                        fun()
+                    }
+                })
+
+                let fun = () => {
+                    console.log('Scroll')
+                    setTimeout(() => {
+                        callFunction = true
+                    }, 1500)
+                }
+            })
+
+        </script>
+        <style>
+            .sec {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 500px;
+                width: 90vw;
+                margin: 50px;
+                background-color: powderblue;
+            }
+
+            .scroll {
+                height: 400px;
+                width: 80vw;
+                overflow: overlay;
+                background-color: tomato;
+            }
+
+            .content {
+                height: 400px;
+                width: 200vw;
+                background-color: teal;
+            }
+
+            ::-webkit-scrollbar {
+                width: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sec"></div>
+        <div class="sec">
+            <div class="scroll">
+                <div class="content"></div>
+            </div>
+        </div>
+        <div class="sec"></div>
+    </body>
+</html>
