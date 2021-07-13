@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}Sucess{% endblock %}
+
+{% block body %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registrant in registrants %}
+                <tr>
+                    <td>{{ registrant["name"] }}</td>
+                    <td>{{ registrant["email"] }}</td>
+                    <td>{{ registrant["subject"] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

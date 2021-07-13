@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block body %}
+
+    <form action="/register" method="post">
+        <input type="text" name="name" placeholder="Name" autocomplete="off" autofocus>
+        <input type="email" name="email" placeholder="Email" autocomplete="off">
+        <select name="subject">
+            <option disabled selected value="">Subject</option>
+            {% for subject in subjects %}
+                <option value="{{ subject }}">{{ subject }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Register">
+    </form>
+
+{% endblock %}
