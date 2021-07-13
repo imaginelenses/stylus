@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tik Tac Toe</title>
+        <link href="static/styles.css" rel="stylesheet">
+    </head>
+    <body>
+
+        <table>
+            {% for i in range(3) %}
+                <tr>
+                    {% for j in range(3) %}
+                        <td>
+                            {% if session["board"][i][j] %}
+                                {{ session["board"][i][j] }}
+                            {% else %}
+                                <a href="{{ url_for('play', row=i, col=j) }}">Play {{ session["turn"] }}</a>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+    </body>
+</html>
