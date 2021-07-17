@@ -51,5 +51,3 @@ def inr(amount):
     result = result.split()[1]
 
     return u"\u20B9" + " " + result
-
-print(lookUp("ETC"))

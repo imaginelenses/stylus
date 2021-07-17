@@ -62,7 +62,6 @@ def buy():
     """Buy Crypto"""
     return customError("TODO")
 
-
 @app.route("/sell")
 @login_required
 def sell():
@@ -74,7 +73,6 @@ def sell():
 def history():
     """History of all transactions"""
     return customError("TODO")
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -95,9 +93,9 @@ def login():
             return customError("Missing Password", 403)
 
         # Query the database for user details
-        rows = db.execute("SELECT * FROM users WHERE username = ?", username)
+        rows = db.execute("SELECT * FROM users WHERE username = ?", (username, )).fetchall()
 
-        if len(rows) != 1 or check_password_hash(rows[0]["hash"], password):
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
             return customError("Invalid Username or Password", 403)
 
         # Remember which user logged in
@@ -107,7 +105,7 @@ def login():
         return redirect("/")
 
     # GET
-    return render_template("login.html", price=inr(13243254374467))
+    return render_template("login.html")
 
 @app.route("/register")
 def register():
