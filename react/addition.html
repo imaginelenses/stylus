@@ -6,9 +6,19 @@
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
         <style>
+
+            #app {
+                text-align: center;
+            }
+
+            .victory {
+                color: green;
+            }
+
             .incorrect {
                 color: red;
             }
+
         </style>
     </head>
     <body>
@@ -37,9 +47,9 @@
                 renderQuestion() {
                     return (
                         <div>
-                            <h1>{this.state.num1} + {this.state.num2}</h1>
+                            <h1 className={this.state.isIncorrect ? 'incorrect' : ''}>{this.state.num1} + {this.state.num2}</h1>
                             <input value={this.state.input} onChange={this.handelInput} onKeyPress={this.handelEnter}/>
-                            <div className={this.state.isIncorrect ? 'incorrect' : ''}>Score: {this.state.score}</div>
+                            <div>Score: {this.state.score}</div>
                         </div>
                     )
                 }
@@ -47,7 +57,7 @@
                 renderWin() {
                     return (
                         <div>
-                            <h1>Victory!</h1>
+                            <h1 className='victory'>Victory!</h1>
                             <button onClick={this.reset}>Reset</button>
                         </div>
                     )
@@ -56,7 +66,9 @@
                 reset = () => {
                     this.setState({
                         score: 0,
-                        input: ''
+                        input: '',
+                        num1: Math.floor(Math.random() * 10),
+                        num2: Math.floor(Math.random() * 10)
                     })
                 }
 
