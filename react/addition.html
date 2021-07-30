@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+        <style>
+            .incorrect {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" />
+        <script type="text/babel">
+
+            class Game extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = {
+                        input: '',
+                        score: 0,
+                        num1: 1,
+                        num2: 1,
+                        isIncorrect: false
+                    }
+                }
+
+                render() {
+                    if (this.state.score > 5) {
+                        return this.renderWin()
+                    }
+                    return this.renderQuestion()
+                }
+
+                renderQuestion() {
+                    return (
+                        <div>
+                            <h1>{this.state.num1} + {this.state.num2}</h1>
+                            <input value={this.state.input} onChange={this.handelInput} onKeyPress={this.handelEnter}/>
+                            <div className={this.state.isIncorrect ? 'incorrect' : ''}>Score: {this.state.score}</div>
+                        </div>
+                    )
+                }
+
+                renderWin() {
+                    return (
+                        <div>
+                            <h1>Victory!</h1>
+                            <button onClick={this.reset}>Reset</button>
+                        </div>
+                    )
+                }
+
+                reset = () => {
+                    this.setState({
+                        score: 0,
+                        input: ''
+                    })
+                }
+
+                handelEnter = (event) => {
+                    if (event.key === 'Enter') {
+                        const value = parseInt(event.target.value)
+                        if (value === this.state.num1 + this.state.num2) {
+                            this.setState((state) => ({
+                                score: state.score + 1,
+                                num1: Math.floor(Math.random() * 10) * (state.score + 1),
+                                num2: Math.floor(Math.random() * 10) * (state.score + 1),
+                                input: '',
+                                isIncorrect: false
+                            }))
+                        }
+                        else {
+                            this.setState((state) => ({
+                                input: '',
+                                isIncorrect: true
+                            }))
+                        }
+                    }
+                }
+
+                handelInput = (event) => {
+                    const value = parseInt(event.target.value)
+                    if (!isNaN(value)) {
+                        this.setState({
+                            input: value
+                        })
+                    }
+                }
+            }
+
+            class App extends React.Component {
+                render() {
+                    return (
+                        <Game />
+                    )
+                }
+            }
+
+            ReactDOM.render(<App />, document.querySelector('#app'))
+
+        </script>
+    </body>
+</html>
